@@ -22,6 +22,7 @@ const io = new Server(httpServer, {
 app.use(helmet()); // XSS, Clickjacking protection
 app.use(cors());
 app.use(express.json({ limit: '10kb' })); // Prevent large payload attacks
+import journalRoutes from './routes/journal.routes';
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

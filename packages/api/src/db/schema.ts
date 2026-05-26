@@ -51,3 +51,25 @@ export const userProgress = sqliteTable('user_progress', {
   completed: integer('completed', { mode: 'boolean' }).default(false),
   completedAt: integer('completed_at', { mode: 'timestamp' }),
 });
+
+export const tradeJournals = sqliteTable('trade_journals', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').references(() => users.id),
+  symbol: text('symbol').notNull(),
+  type: text('type').notNull(), // 'BUY', 'SELL'
+  entryPrice: real('entry_price').notNull(),
+  exitPrice: real('exit_price'),
+  profitLoss: real('profit_loss'),
+  emotion: text('emotion'), // 'Fear', 'Greed', 'Confident', 'Anxious'
+  notes: text('notes'),
+  aiFeedback: text('ai_feedback'),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
+});
+
+export const userProfiles = sqliteTable('user_profiles', {
+  userId: text('user_id').primaryKey().references(() => users.id),
+  riskTolerance: text('risk_tolerance').default('moderate'), // 'low', 'moderate', 'high'
+  tradingStyle: text('trading_style').default('scalper'), // 'scalper', 'day_trader', 'swing'
+  totalTrades: integer('total_trades').default(0),
+  winRate: real('win_rate').default(0),
+});
